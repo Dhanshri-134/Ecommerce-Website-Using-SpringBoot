@@ -1,0 +1,36 @@
+<div class="container mt-5">
+    <div class="card p-2">
+        <div class="row">
+            <!-- First column for the form -->
+            <div class="col-md-6">
+                <form>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Product Name</mat-label>
+                        <input matInput placeholder="Product Name">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Product Description</mat-label>
+                        <input matInput placeholder="Product Description">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Product actual price</mat-label>
+                        <input matInput placeholder="Product actual price">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Product discount price</mat-label>
+                        <input matInput placeholder="Product discount price">
+                    </mat-form-field>
+                    <div align="end">
+                        <button mat-stroked-button color="primary">Clear</button>
+                        <button mat-stroked-button color="primary">Add product</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Second column for file upload -->
+            <div class="col-md-6">
+                <input type="file" multiple value="select" #selectfile (change)="onFileSelected($event)">
+            </div>
+        </div>
+    </div>
+</div>
