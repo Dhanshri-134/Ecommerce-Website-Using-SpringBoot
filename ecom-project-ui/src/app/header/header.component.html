@@ -1,24 +1,34 @@
 <mat-toolbar color="primary">
   <span>
-     E-commerce Application
+    Craft Fusion
   </span>
-  
-  <span class="space-buttons"></span>
+  <span class="space-botton">
+
+  </span>
   <button *ngIf="! isLoggedIn()" routerLink="/login" mat-raised-button color="primary">
     Login
   </button>
   <button *ngIf="isLoggedIn()" (click)="logout()" mat-raised-button color="warn">
-    Logout
+    LogOut 
   </button>
-  </mat-toolbar>
-  <mat-toolbar color="primary">
-    <button mat-raised-button color="primary" routerLink="/">Home</button>
-    <button mat-raised-buutton color="primary"> Add New Product</button>
-  </mat-toolbar>
-  
-  
+</mat-toolbar>
 
-  
+<mat-toolbar color="primary" *ngIf="isLoggedIn()">
+  <button color="primary" mat-raised-button routerLink="/">Home</button>
+  <button *ngIf="isAdmin()" mat-raised-button routerLink="/addNewProduct">Add new Product </button>
+
+</mat-toolbar>
+
+
+
+
+
+
+
+
+
+
+
 <!-- 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">

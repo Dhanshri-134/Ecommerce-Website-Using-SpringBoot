@@ -22,7 +22,8 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
-
+import { AddNewProductComponent } from './add-new-product/add-new-product.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +32,8 @@ import { UserComponent } from './user/user.component';
     UserComponent,
     LoginComponent,
     HeaderComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    AddNewProductComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,8 @@ import { UserComponent } from './user/user.component';
     MatButtonModule,
     MatFormFieldModule,  // Moved here
     MatInputModule,      // Moved here
-    MatIconModule        // Moved here
+    MatIconModule,       // Moved here
+    MatGridListModule
   ],
   providers: [
     AuthGuard,
