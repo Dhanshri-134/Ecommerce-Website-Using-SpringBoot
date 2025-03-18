@@ -16,6 +16,9 @@ public class ProductService {
 
     public Product addNewProduct(Product product) {
         return productDao.save(product);
-
+        public List<Product> getAllProducts() { return (List<Product>)productDao.findAll();}
+    public void deleteProductDetails(Integer productId){
+        productDao.deleteById(productId);
+    }
     }
 }
