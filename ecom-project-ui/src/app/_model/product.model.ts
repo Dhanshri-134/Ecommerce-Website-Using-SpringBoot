@@ -5,5 +5,5 @@ import{FileHandle}from "./file-handle.model";
         productDescription: string,
             productDiscountedPrice: number,
                 productActualPrice: number,
-            productImage:FileHandle[]
+            productImages:FileHandle[]
             } 

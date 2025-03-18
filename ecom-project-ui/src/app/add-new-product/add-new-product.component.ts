@@ -1,11 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from "@angular/core";
+import { NgForm } from '@angular/forms';
+import { DomSanitizer } from "@angular/platform-browser";
 import { FileHandle } from "../_model/file-handle.model";
 import { Product } from "../_model/product.model";
-import { NgForm } from '@angular/forms';
-import { Component, OnInit } from "@angular/core";
-import { MatGridListModule } from '@angular/material/grid-list';
 import { ProductService } from "../_services/product.service";
-import { HttpErrorResponse } from '@angular/common/http';
-import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-new-product',
@@ -19,7 +18,7 @@ export class AddNewProductComponent implements OnInit {
     productDescription: '',
     productDiscountedPrice: 0,
     productActualPrice: 0,
-    productImage: [] // Correct initialization
+    productImages: [] // Correct initialization
   };
 
   constructor(private productService: ProductService,
@@ -39,12 +38,12 @@ export class AddNewProductComponent implements OnInit {
 
 
         };
-        this.product.productImage.push(fileHandle);
+        this.product.productImages.push(fileHandle);
       }
     }
   }
   removeImages(index: number) {
-    this.product.productImage.splice(index, 1);
+    this.product.productImages.splice(index, 1);
   }
   addProduct(productForm: NgForm) {
     const productFormData=this.prepareFormData(this.product);
@@ -53,7 +52,7 @@ export class AddNewProductComponent implements OnInit {
       (response: Product) => {
         console.log(response);
         productForm.resetForm();
-        this.product.productImage=[];
+        this.product.productImages=[];
       },
       (error: HttpErrorResponse) => {
         console.log(error);
@@ -66,11 +65,11 @@ export class AddNewProductComponent implements OnInit {
       "product",
       new Blob([JSON.stringify(product)],{type:'application/json'})
     );
-    for(var i=0;i<product.productImage.length;i++){
+    for(var i=0;i<product.productImages.length;i++){
       formData.append(
         'imageFile',
-        product.productImage[i].file,
-        product.productImage[i].file.name
+        product.productImages[i].file,
+        product.productImages[i].file.name
 
       );
     }
@@ -78,6 +77,6 @@ export class AddNewProductComponent implements OnInit {
   }
   fileDropped(fileHandle:FileHandle)
   {
-    this.product.productImage.push(fileHandle);
+    this.product.productImages.push(fileHandle);
   }
 }
