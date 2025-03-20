@@ -7,11 +7,19 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="jwt" />
+<<<<<<< HEAD
+=======
+        <module name="eccom" />
+>>>>>>> a29fbf2af32365587a00f8a9621b31e159795cc9
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+<<<<<<< HEAD
+=======
+      <module name="eccom" options="-parameters" />
+>>>>>>> a29fbf2af32365587a00f8a9621b31e159795cc9
       <module name="jwt" options="-parameters" />
     </option>
   </component>

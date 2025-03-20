@@ -3,8 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list'; // Add this import
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,17 +15,21 @@ import { RouterModule } from '@angular/router';
 import { AuthGuard } from './_auth/auth.guard';
 import { AuthInterceptor } from './_auth/auth.interceptor';
 import { UserService } from './_services/user.service';
-
+import { MatDialogModule } from '@angular/material/dialog';
 import { AdminComponent } from './admin/admin.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { DragDirective } from './drag.directive';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
 import { AddNewProductComponent } from './add-new-product/add-new-product.component';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { ShowProductDetailsComponent } from './show-product-details/show-product-details.component';
+import { ShowProductImagesDialogComponent } from './show-product-images-dialog/show-product-images-dialog.component';
+import { ImageProcessingService } from './image-processing.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +39,10 @@ import {MatGridListModule} from '@angular/material/grid-list';
     LoginComponent,
     HeaderComponent,
     ForbiddenComponent,
-    AddNewProductComponent
+    AddNewProductComponent,
+    DragDirective,
+    ShowProductDetailsComponent,
+    ShowProductImagesDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -44,10 +53,12 @@ import {MatGridListModule} from '@angular/material/grid-list';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
-    MatFormFieldModule,  // Moved here
-    MatInputModule,      // Moved here
-    MatIconModule,       // Moved here
-    MatGridListModule
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatGridListModule,
+    MatTableModule,  // Include this here to use mat-grid-list
+    MatDialogModule,
   ],
   providers: [
     AuthGuard,
@@ -56,7 +67,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
       useClass: AuthInterceptor,
       multi: true
     },
-    UserService
+    UserService,
+    ImageProcessingService
+
   ],
   bootstrap: [AppComponent]
 })

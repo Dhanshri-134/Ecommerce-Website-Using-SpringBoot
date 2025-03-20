@@ -30,8 +30,26 @@
             <!-- Second column for file upload -->
             <div class="col-6">
                 <div>
+<<<<<<< HEAD
 
                     <input type="file" multiple #selectfile (change)="onFileSelected($event)">
+=======
+                    <div class="dropzone"
+                    appDrag
+                    (files)="($event)"
+                    >
+                        <div class="text-wrapper">
+                            <div class="centered">
+                                Drag and drop Your File or
+                                <a (click)="selectfile.click()" class="browse-btn">browse</a> a file
+                            </div>
+                    
+                        </div>
+
+                    </div>
+
+                    <input type="file" multiple style="display: none;" #selectfile (change)="onFileSelected($event)">
+>>>>>>> a29fbf2af32365587a00f8a9621b31e159795cc9
                 </div>
                 <div class="mt-5">
                     <div class="row">

@@ -13,4 +13,8 @@ describe('UserAuthService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> a29fbf2af32365587a00f8a9621b31e159795cc9

@@ -1,0 +1,11 @@
+table {
+    width: 100%;
+    height: auto;
+    border: 1px solid black;  /* Add border for visibility */
+    margin-top: 20px;
+  }
+  
+  mat-header-row, mat-row {
+    height: 50px;
+  }
+  
