@@ -1,14 +1,16 @@
 package com.project.eccom.entity;
 
-<<<<<<< HEAD
-import javax.persistence.*;
 import java.util.Set;
-=======
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
->>>>>>> a29fbf2af32365587a00f8a9621b31e159795cc9
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Product {
@@ -22,7 +24,6 @@ public class Product {
     private Double productDiscountedPrice;
     private Double productActualPrice;
 
-<<<<<<< HEAD
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "product_images",
             joinColumns = {
@@ -52,9 +53,6 @@ public class Product {
     public void setProductName(String productName) {
         this.productName = productName;
     }
-
-=======
->>>>>>> a29fbf2af32365587a00f8a9621b31e159795cc9
     public Integer getProductId() {
         return productId;
 
@@ -66,7 +64,6 @@ public class Product {
 
     public String getProductName() {
         return productName;
-<<<<<<< HEAD
     }
 
     public Double getProductDiscountedPrice() {
@@ -85,22 +82,3 @@ public class Product {
         this.productActualPrice = productActualPrice;
     }
 }
-=======
-
-    }
-    public String setProductName() {
-        return this.productName;
-    }
-
-    public void setproductName(String productName) {
-        this.productName = productName;
-    }
-    public String getProductDescription() {
-        return productDescription;
-
-    }
-    public void setProductDescription(String productDescription){
-        this.productDescription = productDescription;
-    }
-}
->>>>>>> a29fbf2af32365587a00f8a9621b31e159795cc9

@@ -1,17 +1,8 @@
-<<<<<<< HEAD
-
-
-=======
->>>>>>> a29fbf2af32365587a00f8a9621b31e159795cc9
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserAuthService } from '../_services/user-auth.service';
 import { UserService } from '../_services/user.service';
-<<<<<<< HEAD
-=======
 import { ChangeDetectorRef } from '@angular/core';
-
->>>>>>> a29fbf2af32365587a00f8a9621b31e159795cc9
 
 @Component({
   selector: 'app-header',
@@ -36,7 +27,6 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/']);
   }
   public isAdmin()
-<<<<<<< HEAD
   {
     return this.userAuthService.isAdmin();
   }
@@ -45,13 +35,4 @@ export class HeaderComponent implements OnInit {
   }
 
 }
-=======
-{
- return this.userAuthService.isAdmin();
-}
-public isUser(){
-  return this.userAuthService.isUser();
-}
 
-}
->>>>>>> a29fbf2af32365587a00f8a9621b31e159795cc9
