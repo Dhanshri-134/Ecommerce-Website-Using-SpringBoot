@@ -57,7 +57,7 @@ import { ImageProcessingService } from './image-processing.service';
     MatInputModule,
     MatIconModule,
     MatGridListModule,
-    MatTableModule,  // Include this here to use mat-grid-list
+    MatTableModule,  
     MatDialogModule,
   ],
   providers: [

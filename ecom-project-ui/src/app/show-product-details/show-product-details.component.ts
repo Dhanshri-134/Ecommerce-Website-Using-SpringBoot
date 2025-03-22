@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ShowProductImagesDialogComponent } from '../show-product-images-dialog/show-product-images-dialog.component';
 import { ImageProcessingService } from '../image-processing.service'; // Correct path
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-show-product-details',
@@ -19,7 +20,8 @@ export class ShowProductDetailsComponent implements OnInit {
 
   constructor(private productService: ProductService,
     public imagesDialog: MatDialog,
-    private imageProcessingService: ImageProcessingService) {}
+    private imageProcessingService: ImageProcessingService,
+    private router: Router) {}
 
 
   ngOnInit(): void {
@@ -43,24 +45,30 @@ export class ShowProductDetailsComponent implements OnInit {
     );
   }
 
-deleteProduct(productId){
-  this.productService.deleteProduct(productId).subscribe(
-    (resp)=>{
-      this.getAllProduct();
-    },
-    (error:HttpErrorResponse) => {
-      console.log(error);
-    }
-  );
-}
-showImages(product:Product){
-  console.log(product);
-  this.imagesDialog.open(ShowProductImagesDialogComponent, {
-    data:{
-      images: product.productImages
-    },
-    height:'500px',
-    width:'800px'
-  });
-}
+  deleteProduct(productId){
+    this.productService.deleteProduct(productId).subscribe(
+      (resp)=>{
+        this.getAllProduct();
+      },
+      (error:HttpErrorResponse) => {
+        console.log(error);
+      }
+    );
+  }
+  showImages(product:Product){
+    console.log(product);
+    this.imagesDialog.open(ShowProductImagesDialogComponent, {
+      data:{
+        images: product.productImages
+      },
+      height:'500px',
+      width:'800px'
+    });
+  }
+
+  editProductDetails(productId){
+    this.router.navigate(['/addNewProduct',{productId:productId}]);
+  }
+
+
 }

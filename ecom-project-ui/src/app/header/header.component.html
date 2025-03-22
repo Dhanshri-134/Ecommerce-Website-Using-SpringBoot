@@ -5,7 +5,7 @@
   <span class="space-botton">
 
   </span>
-  <button *ngIf="! isLoggedIn()" routerLink="/login" mat-raised-button color="primary">
+  <button *ngIf="!isLoggedIn()" routerLink="/login" mat-raised-button color="primary">
     Login
   </button>
   <button *ngIf="isLoggedIn()" (click)="logout()" mat-raised-button color="warn">
@@ -14,11 +14,11 @@
 </mat-toolbar>
 
 
-<!-- <mat-toolbar color="primary" *ngIf="isLoggedIn()"> -->
-<mat-toolbar color="primary">
-<button mat-raised-button routerLink="/">Home</button>
-  <button mat-raised-button routerLink="/addNewProduct">Add new Product </button>
-  <button mat-raised-button routerLink="/showProductDetails">Show product details </button>
+<mat-toolbar color="primary" *ngIf="isLoggedIn()">
+<!-- <mat-toolbar color="primary"> -->
+<button mat-raised-button color="primary" routerLink="/">Home</button>
+  <button *ngIf="isAdmin()" mat-raised-button color="primary" routerLink="/addNewProduct">Add new Product </button>
+  <button *ngIf="isAdmin()" mat-raised-button color="primary" routerLink="/showProductDetails">Show product details </button>
 
 
 </mat-toolbar>

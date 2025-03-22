@@ -6,7 +6,7 @@
                 <form #productForm="ngForm" (ngSubmit)="addProduct(productForm)">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Product Name</mat-label>
-                        <input matInput placeholder="Product Name" [(ngModel)]="product.productName" name="productName" required>
+                        <input matInput placeholder="Product Name" [(ngModel)]="product.productName" name="productName" required >
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Product Description</mat-label>
@@ -22,7 +22,8 @@
                     </mat-form-field>
                     <div align="end">
                         <button mat-stroked-button color="primary" style="margin-right: 3px;">Clear</button>
-                        <button type="submit" mat-stroked-button color="primary">Add product</button>
+                        <button type="submit" *ngIf="isNewProduct" mat-stroked-button color="primary">Add product</button>
+                        <button type="submit" *ngIf="!isNewProduct" mat-stroked-button color="primary">Update product</button>
                     </div>
                 </form>
             </div>
@@ -30,14 +31,7 @@
             <!-- Second column for file upload -->
             <div class="col-6">
                 <div>
-<<<<<<< HEAD
-
-                    <input type="file" multiple #selectfile (change)="onFileSelected($event)">
-=======
-                    <div class="dropzone"
-                    appDrag
-                    (files)="($event)"
-                    >
+                    <div class="dropzone" appDrag (files)="($event)">
                         <div class="text-wrapper">
                             <div class="centered">
                                 Drag and drop Your File or
@@ -49,7 +43,6 @@
                     </div>
 
                     <input type="file" multiple style="display: none;" #selectfile (change)="onFileSelected($event)">
->>>>>>> a29fbf2af32365587a00f8a9621b31e159795cc9
                 </div>
                 <div class="mt-5">
                     <div class="row">

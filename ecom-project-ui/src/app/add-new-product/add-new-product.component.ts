@@ -5,6 +5,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { FileHandle } from "../_model/file-handle.model";
 import { Product } from "../_model/product.model";
 import { ProductService } from "../_services/product.service";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-new-product',
@@ -12,19 +13,30 @@ import { ProductService } from "../_services/product.service";
   styleUrls: ['./add-new-product.component.css']
 })
 export class AddNewProductComponent implements OnInit {
+  isNewProduct = true;
 
   product: Product = {
+    productId:null,
     productName: '',
     productDescription: '',
     productDiscountedPrice: 0,
     productActualPrice: 0,
-    productImages: [] // Correct initialization
+    productImages: [] 
   };
 
-  constructor(private productService: ProductService,
-    private sanitizer:DomSanitizer) {}
+  constructor(
+    private productService: ProductService,
+    private sanitizer:DomSanitizer,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.product = this.activatedRoute.snapshot.data['product'];
+
+    if(this.product && this.product.productId){
+      this.isNewProduct = false;
+    }
+  }
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
