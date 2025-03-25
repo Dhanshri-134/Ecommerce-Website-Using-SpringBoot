@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatGridListModule } from '@angular/material/grid-list'; // Add this import
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
@@ -29,6 +29,8 @@ import { AddNewProductComponent } from './add-new-product/add-new-product.compon
 import { ShowProductDetailsComponent } from './show-product-details/show-product-details.component';
 import { ShowProductImagesDialogComponent } from './show-product-images-dialog/show-product-images-dialog.component';
 import { ImageProcessingService } from './image-processing.service';
+import { ProductService } from './_services/product.service';
+import { ProductViewDetailsComponent } from './product-view-details/product-view-details.component';  // Ensure ProductService is imported
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { ImageProcessingService } from './image-processing.service';
     AddNewProductComponent,
     DragDirective,
     ShowProductDetailsComponent,
-    ShowProductImagesDialogComponent
+    ShowProductImagesDialogComponent,
+    ProductViewDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -57,8 +60,8 @@ import { ImageProcessingService } from './image-processing.service';
     MatInputModule,
     MatIconModule,
     MatGridListModule,
-    MatTableModule,  
-    MatDialogModule,
+    MatTableModule,
+    MatDialogModule
   ],
   providers: [
     AuthGuard,
@@ -68,8 +71,8 @@ import { ImageProcessingService } from './image-processing.service';
       multi: true
     },
     UserService,
+    ProductService,  // Add ProductService here to avoid DI errors
     ImageProcessingService
-
   ],
   bootstrap: [AppComponent]
 })

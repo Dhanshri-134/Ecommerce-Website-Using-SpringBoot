@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { Product } from '../_model/product.model';
 import { ImageProcessingService } from '../image-processing.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,32 +13,36 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
 
-  productDetails = [];
-  dataSource: any[];
+  productDetails: Product[] = [];  // Typed as Product array
+  dataSource: Product[] = [];  // Typed as Product array
 
   constructor(private productService: ProductService,
-    private imageProcessingService: ImageProcessingService
-  ) { }
+              private imageProcessingService: ImageProcessingService,
+            private router:Router) { }
 
   ngOnInit(): void {
-    this.getAllProduct();
+    this.getAllProduct();  // Fetch products on component init
   }
 
   public getAllProduct(): void {
-      this.productService.getAllProducts()
+    this.productService.getAllProducts()
       .pipe(
-        map((x:Product[],i) => x.map((product: Product)=>this.imageProcessingService.createImages(product)))
+        map((products: Product[]) => products.map((product: Product) => 
+          this.imageProcessingService.createImages(product)))  // Process images for each product
       )  
       .subscribe(
         (resp: Product[]) => {
           console.log('Products:', resp);
-          this.productDetails = resp;  // Store the product details
-          this.dataSource = this.productDetails;  // Assign to dataSource for mat-table
+          this.productDetails = resp;  // Store fetched product details
+          this.dataSource = this.productDetails;  // Assign product details to dataSource for table
         },
         (error: HttpErrorResponse) => {
-          console.error('Error fetching products:', error);
+          console.error('Error fetching products:', error);  // Handle any errors
         }
       );
-    }
-  
+  }
+  showProductDetails(productId){
+    this.router.navigate(['/productViewDetails'], { queryParams: { productId: productId } });
+
+  }
 }

@@ -16,59 +16,65 @@ import { Router } from '@angular/router';
 export class ShowProductDetailsComponent implements OnInit {
   productDetails: Product[] = [];
   dataSource: Product[] = [];  // This will be the data for your table
-  displayedColumns: string[] = ['productId', 'productName', 'productDescription', 'productDiscountedPrice', 'productActualPrice','Images','Edit','Delete'];
+  displayedColumns: string[] = ['productId', 'productName', 'productDescription', 'productDiscountedPrice', 'productActualPrice','Images','Actions'];
 
-  constructor(private productService: ProductService,
+  constructor(
+    private productService: ProductService,
     public imagesDialog: MatDialog,
     private imageProcessingService: ImageProcessingService,
-    private router: Router) {}
-
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getAllProduct();  // Fetch the products when the component is initialized
   }
 
+  // Fetch all products with their images processed
   public getAllProduct(): void {
-    this.productService.getAllProducts()
-    .pipe(
-      map((x:Product[],i) => x.map((product: Product)=>this.imageProcessingService.createImages(product)))
-    )  
-    .subscribe(
+    
+    this.productService.getAllProducts().subscribe(
       (resp: Product[]) => {
-        console.log('Products:', resp);
-        this.productDetails = resp;  // Store the product details
-        this.dataSource = this.productDetails;  // Assign to dataSource for mat-table
+        console.log('API Response:', resp);
+        this.productDetails = resp;
+        this.dataSource = this.productDetails;
       },
       (error: HttpErrorResponse) => {
         console.error('Error fetching products:', error);
       }
     );
+    
   }
 
-  deleteProduct(productId){
+  // Delete a product
+  deleteProduct(productId: number): void {
     this.productService.deleteProduct(productId).subscribe(
-      (resp)=>{
+      () => {
+        // Refresh product list after deletion
         this.getAllProduct();
       },
-      (error:HttpErrorResponse) => {
-        console.log(error);
+      (error: HttpErrorResponse) => {
+        console.error('Error deleting product:', error);
       }
     );
   }
-  showImages(product:Product){
-    console.log(product);
-    this.imagesDialog.open(ShowProductImagesDialogComponent, {
-      data:{
-        images: product.productImages
-      },
-      height:'500px',
-      width:'800px'
-    });
+
+  // Open dialog to show product images
+  showImages(product: Product): void {
+    if (product.productImages && product.productImages.length > 0) {
+      this.imagesDialog.open(ShowProductImagesDialogComponent, {
+        data: {
+          images: product.productImages
+        },
+        height: '500px',
+        width: '800px'
+      });
+    } else {
+      console.warn('No images available for this product.');
+    }
   }
 
-  editProductDetails(productId){
-    this.router.navigate(['/addNewProduct',{productId:productId}]);
+  // Navigate to the edit product form
+  editProductDetails(productId: number): void {
+    this.router.navigate(['/addNewProduct', { productId: productId }]);
   }
-
-
 }
