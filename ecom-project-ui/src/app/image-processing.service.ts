@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Product } from './_model/product.model';
-import { FileHandle } from './_model/file-handle.model';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FileHandle } from './_model/file-handle.model';
+import { Product } from './_model/product.model';
+
+
 
 @Injectable({
   providedIn: 'root'

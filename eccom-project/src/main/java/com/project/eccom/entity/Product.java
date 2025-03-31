@@ -19,7 +19,8 @@ public class Product {
 
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "product_id", nullable = false, updatable = false)
     private Integer productId;
     private String productName;
     @Column(length=2000)
