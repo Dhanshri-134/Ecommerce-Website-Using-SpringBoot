@@ -31,7 +31,8 @@ import { ShowProductImagesDialogComponent } from './show-product-images-dialog/s
 import { ImageProcessingService } from './image-processing.service';
 import { ProductService } from './_services/product.service';
 import { ProductViewDetailsComponent } from './product-view-details/product-view-details.component';
-import { BuyProductComponent } from './buy-product/buy-product.component';  // Ensure ProductService is imported
+import { BuyProductComponent } from './buy-product/buy-product.component';
+import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';  // Ensure ProductService is imported
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { BuyProductComponent } from './buy-product/buy-product.component';  // E
     ShowProductDetailsComponent,
     ShowProductImagesDialogComponent,
     ProductViewDetailsComponent,
-    BuyProductComponent
+    BuyProductComponent,
+    OrderConfirmationComponent
   ],
   imports: [
     BrowserModule,

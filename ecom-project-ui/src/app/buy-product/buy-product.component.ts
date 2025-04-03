@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderDetails } from '../_model/order-details.model';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../_model/product.model';
 import { ProductService } from '../_services/product.service';
 
@@ -22,7 +22,9 @@ export class BuyProductComponent implements OnInit {
     orderProductQuantityList:[]
   }
   constructor(private activateRoute:ActivatedRoute,
-   private productService:ProductService) { }
+   private productService:ProductService,
+   private router: Router
+   ) { }
 
   ngOnInit(): void {
     this.productDetails = this.activateRoute.snapshot.data['productDetails'];
@@ -37,14 +39,45 @@ export class BuyProductComponent implements OnInit {
   public placeOrder(orderForm:NgForm){
      this.productService.placeOrder(this.orderDetails).subscribe(
       (resp)=>{
-        console.log();
-        (resp);
+        console.log(resp);
         orderForm.reset();
+        this.router.navigate(["/orderConfirm"]);
       },
       (err)=>{
         console.log(err);
       })
-     
   }
 
+  public getQuantityForProduct(productId){
+    const filteredProduct = this.orderDetails.orderProductQuantityList.filter(
+      (productQuantity) =>productQuantity.productId === productId
+    );
+
+    return filteredProduct;
+  }
+
+  getCalculatedTotal(productId, productDiscountedPrice){
+    const filteredProduct = this.orderDetails.orderProductQuantityList.filter(
+      (productQuantity) =>productQuantity.productId === productId
+    );
+
+    return filteredProduct[0].quantity * productDiscountedPrice
+
+  }
+  onQuantityChanged(value, productId){
+    this.orderDetails.orderProductQuantityList.filter(
+      (orderProduct) => orderProduct.productId === productId
+    )[0].quantity = value;
+  }
+
+  getCalculatedGrandTotal(){
+    let grandTotal = 0;
+    this.orderDetails.orderProductQuantityList.forEach(
+          (productQuantity) => {
+           const price =this.productDetails.filter(product => product.productId === productQuantity.productId)[0].productDiscountedPrice;
+           grandTotal= grandTotal+price * productQuantity.quantity;
+          }
+        );
+    return grandTotal;
+  }
 }
