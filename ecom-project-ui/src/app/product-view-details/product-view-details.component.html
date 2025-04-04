@@ -27,9 +27,9 @@
             <b style="text-decoration: line-through;">{{ product.productActualPrice | currency:'INR':'symbol' }}</b>
           </div>
           
-<div class="mt-5 text-center">
-    <button mat-raised-button color="warn" style="width: 200px;">Buy Now</button>
-</div>
+          <div class="mt-5 text-center">
+              <button mat-raised-button color="warn" style="width: 200px;" (click)="buyProduct(product.productId)">Buy Now</button>
+          </div>
         </div>
       </div>
     </div>

@@ -30,7 +30,9 @@ import { ShowProductDetailsComponent } from './show-product-details/show-product
 import { ShowProductImagesDialogComponent } from './show-product-images-dialog/show-product-images-dialog.component';
 import { ImageProcessingService } from './image-processing.service';
 import { ProductService } from './_services/product.service';
-import { ProductViewDetailsComponent } from './product-view-details/product-view-details.component';  // Ensure ProductService is imported
+import { ProductViewDetailsComponent } from './product-view-details/product-view-details.component';
+import { BuyProductComponent } from './buy-product/buy-product.component';
+import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';  // Ensure ProductService is imported
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { ProductViewDetailsComponent } from './product-view-details/product-view
     DragDirective,
     ShowProductDetailsComponent,
     ShowProductImagesDialogComponent,
-    ProductViewDetailsComponent
+    ProductViewDetailsComponent,
+    BuyProductComponent,
+    OrderConfirmationComponent
   ],
   imports: [
     BrowserModule,
