@@ -14,17 +14,14 @@ import { ProductViewDetailsComponent } from './product-view-details/product-view
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'admin', component: AdminComponent, canActivate:[AuthGuard], data:{roles:['Admin']} },
-  { path: 'user', component: UserComponent ,  canActivate:[AuthGuard], data:{roles:['User']} },
+  { path: 'user', component: UserComponent, canActivate:[AuthGuard], data:{roles:['User']} },
   { path: 'login', component: LoginComponent },
   { path: 'forbidden', component: ForbiddenComponent },
-  { path: 'addNewProduct', component: AddNewProductComponent, canActivate:[AuthGuard],data:{roles:['Admin']},
-    resolve:{
-      product: ProductResolveService
-    }
+  { path: 'addNewProduct', component: AddNewProductComponent, canActivate:[AuthGuard], data:{roles:['Admin']},
+    resolve: { product: ProductResolveService }
   },
-  { path: 'showProductDetails', component: ShowProductDetailsComponent,canActivate:[AuthGuard],data:{roles:['Admin']} },
-  {path:'productViewDetails',component:ProductViewDetailsComponent,resolve: { product:ProductResolveService}}
-
+  { path: 'showProductDetails/:id', component: ShowProductDetailsComponent, canActivate:[AuthGuard], data:{roles:['Admin']} },
+  { path: 'productViewDetails', component: ProductViewDetailsComponent, resolve: { product: ProductResolveService } }
 ];
 
 @NgModule({
