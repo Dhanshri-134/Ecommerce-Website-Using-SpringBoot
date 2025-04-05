@@ -13,7 +13,10 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  pageNumber:number=0;
+
   productDetails: Product[] = [];  // Typed as Product array
+  showLOadButton=false;
   dataSource: Product[] = [];  // Typed as Product array
 
   constructor(private productService: ProductService,
@@ -25,7 +28,7 @@ export class HomeComponent implements OnInit {
   }
 
   public getAllProduct(): void {
-    this.productService.getAllProducts()
+    this.productService.getAllProducts(this.pageNumber)
       .pipe(
         map((products: Product[]) => products.map((product: Product) => 
           this.imageProcessingService.createImages(product)))  // Process images for each product
@@ -33,7 +36,15 @@ export class HomeComponent implements OnInit {
       .subscribe(
         (resp: Product[]) => {
           console.log('Products:', resp);
-          this.productDetails = resp;  // Store fetched product details
+          if(resp.length==12)
+          {
+            this.showLOadButton=true;
+          }
+          else{
+            this.showLOadButton=false;
+          }
+          resp.forEach(p=>this.productDetails.push(p));
+          //this.productDetails = resp;  // Store fetched product details
           this.dataSource = this.productDetails;  // Assign product details to dataSource for table
         },
         (error: HttpErrorResponse) => {
@@ -44,5 +55,10 @@ export class HomeComponent implements OnInit {
   showProductDetails(productId){
     this.router.navigate(['/productViewDetails'], { queryParams: { productId: productId } });
 
+  }
+  public loadMoreProduct()
+  {
+    this.pageNumber=this.pageNumber + 1;
+    this.getAllProduct();
   }
 }

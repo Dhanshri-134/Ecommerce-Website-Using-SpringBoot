@@ -4,6 +4,8 @@ import { Product } from "../_model/product.model"; // Ensure correct path
 import { ProductService } from '../_services/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ShowProductImagesDialogComponent } from '../show-product-images-dialog/show-product-images-dialog.component';
+import { ImageProcessingService } from '../image-processing.service'; // Correct path
+import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,11 +16,12 @@ import { Router } from '@angular/router';
 export class ShowProductDetailsComponent implements OnInit {
   productDetails: Product[] = [];
   dataSource: Product[] = [];  // This will be the data for your table
-  displayedColumns: string[] = ['productId', 'productName', 'productDescription', 'productDiscountedPrice', 'productActualPrice', 'Images', 'Actions'];
+  displayedColumns: string[] = ['productId', 'productName', 'productDescription', 'productDiscountedPrice', 'productActualPrice','Images','Actions'];
 
   constructor(
     private productService: ProductService,
     public imagesDialog: MatDialog,
+    private imageProcessingService: ImageProcessingService,
     private router: Router
   ) {}
 
@@ -28,16 +31,18 @@ export class ShowProductDetailsComponent implements OnInit {
 
   // Fetch all products with their images processed
   public getAllProduct(): void {
-    this.productService.getAllProducts().subscribe(
+    
+    this.productService.getAllProducts(0).subscribe(
       (resp: Product[]) => {
-        console.log('API Response:', resp); // Log API response for debugging
+        console.log('API Response:', resp);
         this.productDetails = resp;
-        this.dataSource = this.productDetails; // Assign data to the table's dataSource
+        this.dataSource = this.productDetails;
       },
       (error: HttpErrorResponse) => {
         console.error('Error fetching products:', error);
       }
     );
+    
   }
 
   // Delete a product
