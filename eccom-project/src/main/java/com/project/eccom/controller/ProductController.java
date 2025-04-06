@@ -13,6 +13,7 @@ import com.project.eccom.entity.Product;
 import com.project.eccom.service.ProductService;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.MediaType;
+import org.springframework.data.domain.Page;  // Importing Page for pagination
 
 @RestController
 public class ProductController {
@@ -34,7 +35,7 @@ public class ProductController {
         }
     }
 
-   public Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException {
+    public Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException {
         Set<ImageModel> imageModels = new HashSet<>();
 
         for (MultipartFile file : multipartFiles) {
@@ -49,12 +50,13 @@ public class ProductController {
         return imageModels;
     }
 
+    // Updated to return a Page<Product> instead of a List<Product>
     @GetMapping({"/getAllProducts"})
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public List<Product> getAllProducts(@RequestParam(defaultValue = "0") int pageNumber) {
+        return productService.getAllProducts(pageNumber);  // Return a Page<Product> object
     }
 
-        @GetMapping({"/getProductDetailsById/{productId}"})
+    @GetMapping({"/getProductDetailsById/{productId}"})
     public Product getProductDetailsById(@PathVariable("productId") Integer productId){
         return productService.getProductDetailsById(productId);
     }
@@ -64,6 +66,7 @@ public class ProductController {
     public void deleteProductDetails(@PathVariable("productId") Integer productId) {
         productService.deleteProductDetails(productId);
     }
+<<<<<<< HEAD
     @PreAuthorize("hasRole('User')")
     @GetMapping({"/getProductDetails/{isSingleProductCheckout}/{productId}"})
     public List<Product> getProductDetails(@PathVariable(name= "isSingleProductCheckout")boolean isSingleProductCheckout,
@@ -73,3 +76,12 @@ public class ProductController {
     
     }
   }
+=======
+
+    @PreAuthorize("hasRole('Admin')")
+    @GetMapping({"/getProductDetails/{isSingleProductCheckout}/{productId}"})
+    public List<Product> getProductDetails(@PathVariable(name = "isSingleProductCheckout") boolean isSingleProductCheckout, @PathVariable(name = "productId") Integer productId){
+        return productService.getProductDetails(isSingleProductCheckout, productId);
+    }
+}
+>>>>>>> 0fc15ad2b77e54d12989640f3810ac410e689ec3

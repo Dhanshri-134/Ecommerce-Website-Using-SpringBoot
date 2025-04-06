@@ -11,7 +11,11 @@ export class ProductViewDetailsComponent implements OnInit {
   selectedProductIndex=0;
   product:Product;
   constructor(private activatedRoute:ActivatedRoute,
+<<<<<<< HEAD
     private router: Router) { }
+=======
+    private router:Router  ) { }
+>>>>>>> 0fc15ad2b77e54d12989640f3810ac410e689ec3
 
   ngOnInit(): void {
     this.product = this.activatedRoute.snapshot.data['product'];
@@ -21,9 +25,16 @@ export class ProductViewDetailsComponent implements OnInit {
   {
     this.selectedProductIndex=index;
   }
+<<<<<<< HEAD
   buyProduct(ProductId){
  this.router.navigate(['/buyProduct',{
   isSingleProductCheckout: true, id: ProductId
  }]);
+=======
+  buyProduct(productId){
+    this.router.navigate(['/buyProduct', {
+      isSingleProductCheckout: true, id: productId
+    }]);
+>>>>>>> 0fc15ad2b77e54d12989640f3810ac410e689ec3
   }
 }

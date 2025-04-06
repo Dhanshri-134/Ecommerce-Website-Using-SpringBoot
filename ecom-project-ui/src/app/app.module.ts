@@ -31,7 +31,13 @@ import { ShowProductImagesDialogComponent } from './show-product-images-dialog/s
 import { ImageProcessingService } from './image-processing.service';
 import { ProductService } from './_services/product.service';
 import { ProductViewDetailsComponent } from './product-view-details/product-view-details.component';
+<<<<<<< HEAD
 import { BuyProductComponent } from './buy-product/buy-product.component';  // Ensure ProductService is imported
+=======
+import { BuyProductComponent } from './buy-product/buy-product.component';
+import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';  // Ensure ProductService is imported
+import { RegisterComponent } from './register/register.component';
+>>>>>>> 0fc15ad2b77e54d12989640f3810ac410e689ec3
 
 @NgModule({
   declarations: [
@@ -47,7 +53,13 @@ import { BuyProductComponent } from './buy-product/buy-product.component';  // E
     ShowProductDetailsComponent,
     ShowProductImagesDialogComponent,
     ProductViewDetailsComponent,
+<<<<<<< HEAD
     BuyProductComponent
+=======
+    BuyProductComponent,
+    OrderConfirmationComponent,
+    RegisterComponent
+>>>>>>> 0fc15ad2b77e54d12989640f3810ac410e689ec3
   ],
   imports: [
     BrowserModule,

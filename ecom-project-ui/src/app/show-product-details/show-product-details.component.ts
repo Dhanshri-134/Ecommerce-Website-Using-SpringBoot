@@ -32,7 +32,7 @@ export class ShowProductDetailsComponent implements OnInit {
   // Fetch all products with their images processed
   public getAllProduct(): void {
     
-    this.productService.getAllProducts().subscribe(
+    this.productService.getAllProducts(0).subscribe(
       (resp: Product[]) => {
         console.log('API Response:', resp);
         this.productDetails = resp;

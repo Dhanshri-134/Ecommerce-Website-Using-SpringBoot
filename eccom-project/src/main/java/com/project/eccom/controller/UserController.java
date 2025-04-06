@@ -21,6 +21,13 @@ public class UserController {
     public void initRoleAndUser() {
         userService.initRoleAndUser();
     }
+    @PostMapping({"/registerNewUser"})
+    public String postMethodName(@RequestBody String entity) {
+        //TODO: process POST request
+        
+        return entity;
+    }
+    
 
     @PostMapping({"/registerNewUser"})
     public User registerNewUser(@RequestBody User user) {

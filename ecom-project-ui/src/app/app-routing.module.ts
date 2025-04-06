@@ -11,19 +11,28 @@ import { ShowProductDetailsComponent } from './show-product-details/show-product
 import { ProductResolveService } from './product-resolve.service';
 import { ProductViewDetailsComponent } from './product-view-details/product-view-details.component';
 import { BuyProductComponent } from './buy-product/buy-product.component';
+<<<<<<< HEAD
 import { BuyProductResolverService } from './buy-product-resolver.service';
+=======
+// import { resolve } from 'dns';
+import { BuyProductResolverService } from './buy-product-resolver.service';
+import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
+import { RegisterComponent } from './register/register.component';
+>>>>>>> 0fc15ad2b77e54d12989640f3810ac410e689ec3
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'admin', component: AdminComponent, canActivate:[AuthGuard], data:{roles:['Admin']} },
-  { path: 'user', component: UserComponent ,  canActivate:[AuthGuard], data:{roles:['User']} },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] } },
+  { path: 'user', component: UserComponent, canActivate: [AuthGuard], data: { roles: ['User'] } },
   { path: 'login', component: LoginComponent },
   { path: 'forbidden', component: ForbiddenComponent },
-  { path: 'addNewProduct', component: AddNewProductComponent, canActivate:[AuthGuard],data:{roles:['Admin']},
-    resolve:{
+  {
+    path: 'addNewProduct', component: AddNewProductComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] },
+    resolve: {
       product: ProductResolveService
     }
   },
+<<<<<<< HEAD
   { path: 'showProductDetails', component: ShowProductDetailsComponent,canActivate:[AuthGuard],data:{roles:['Admin']} },
   {path:'productViewDetails',component:ProductViewDetailsComponent,resolve: { product:ProductResolveService}},
   {path:'buyProduct',component:BuyProductComponent,canActivate:[AuthGuard],data:{roles:['User']},
@@ -31,6 +40,26 @@ const routes: Routes = [
     productDetails: BuyProductResolverService
   }
 }
+=======
+  { path: 'showProductDetails', component: ShowProductDetailsComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] } },
+  { path: 'productViewDetails', component: ProductViewDetailsComponent, resolve: { product: ProductResolveService } },
+  {
+    path: 'buyProduct', component: BuyProductComponent, canActivate: [AuthGuard], data: { roles: ['User'] },
+    resolve: {
+      productDetails: BuyProductResolverService
+    }
+  },
+  {
+    path:"orderConfirm",
+    component:OrderConfirmationComponent,
+    canActivate:[AuthGuard],
+    data:{roles:['User']}
+  },
+  {path:"register",
+    component:RegisterComponent
+  }
+
+>>>>>>> 0fc15ad2b77e54d12989640f3810ac410e689ec3
 ];
   
 
@@ -38,4 +67,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
