@@ -5,79 +5,78 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../_model/product.model';
 import { ProductService } from '../_services/product.service';
 
-
 @Component({
   selector: 'app-buy-product',
   templateUrl: './buy-product.component.html',
   styleUrls: ['./buy-product.component.css']
 })
 export class BuyProductComponent implements OnInit {
+  productDetails: Product[] = [];
+  orderDetails: OrderDetails = {
+    fullName: '',
+    fullAddress: '',
+    contactNumber: '',
+    alternateContactNumber: '',
+    orderProductQuantityList: []
+  };
+  productTotalMap: { [productId: number]: number } = {};
+  grandTotal = 0;
 
-  productDetails:Product[] = [];
-  orderDetails: OrderDetails={
-    fullName:'',
-    fullAddress:'',
-    contactNumber:'',
-    alternateContactNumber:'',
-    orderProductQuantityList:[]
-  }
-  constructor(private activateRoute:ActivatedRoute,
-   private productService:ProductService,
-   private router: Router
-   ) { }
+  constructor(
+    private activateRoute: ActivatedRoute,
+    private productService: ProductService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.productDetails = this.activateRoute.snapshot.data['productDetails'];
-    this.productDetails.forEach(
-      x=>this.orderDetails.orderProductQuantityList.push(
-        {productId: x.productId, quantity:1}
-      )
-    );
-    console.log(this.productDetails)
-    console.log(this.orderDetails);
+
+    this.productDetails.forEach(product => {
+      this.orderDetails.orderProductQuantityList.push({
+        productId: product.productId,
+        quantity: 1
+      });
+      this.productTotalMap[product.productId] = product.productDiscountedPrice;
+    });
+
+    this.calculateGrandTotal();
   }
-  public placeOrder(orderForm:NgForm){
-     this.productService.placeOrder(this.orderDetails).subscribe(
-      (resp)=>{
+
+  placeOrder(orderForm: NgForm): void {
+    this.productService.placeOrder(this.orderDetails).subscribe(
+      (resp) => {
         console.log(resp);
         orderForm.reset();
-        this.router.navigate(["/orderConfirm"]);
+        this.router.navigate(['/orderConfirm']);
       },
-      (err)=>{
-        console.log(err);
-      })
+      (err) => {
+        console.error(err);
+      }
+    );
   }
 
-  public getQuantityForProduct(productId){
-    const filteredProduct = this.orderDetails.orderProductQuantityList.filter(
-      (productQuantity) =>productQuantity.productId === productId
+  onQuantityChanged(value: string, productId: number): void {
+    const quantity = +value;
+    const orderProduct = this.orderDetails.orderProductQuantityList.find(
+      item => item.productId === productId
     );
 
-    return filteredProduct;
+    if (orderProduct) {
+      orderProduct.quantity = quantity;
+    }
+
+    const product = this.productDetails.find(p => p.productId === productId);
+    if (product) {
+      this.productTotalMap[productId] = quantity * product.productDiscountedPrice;
+    }
+
+    this.calculateGrandTotal();
   }
 
-  getCalculatedTotal(productId, productDiscountedPrice){
-    const filteredProduct = this.orderDetails.orderProductQuantityList.filter(
-      (productQuantity) =>productQuantity.productId === productId
-    );
-
-    return filteredProduct[0].quantity * productDiscountedPrice
-
-  }
-  onQuantityChanged(value, productId){
-    this.orderDetails.orderProductQuantityList.filter(
-      (orderProduct) => orderProduct.productId === productId
-    )[0].quantity = value;
-  }
-
-  getCalculatedGrandTotal(){
-    let grandTotal = 0;
-    this.orderDetails.orderProductQuantityList.forEach(
-          (productQuantity) => {
-           const price =this.productDetails.filter(product => product.productId === productQuantity.productId)[0].productDiscountedPrice;
-           grandTotal= grandTotal+price * productQuantity.quantity;
-          }
-        );
-    return grandTotal;
+  calculateGrandTotal(): void {
+    this.grandTotal = 0;
+    for (let productId in this.productTotalMap) {
+      this.grandTotal += this.productTotalMap[productId];
+    }
   }
 }

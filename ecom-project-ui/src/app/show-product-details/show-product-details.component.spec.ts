@@ -55,7 +55,13 @@ describe('ShowProductDetailsComponent', () => {
   });
 
   it('should open the images dialog when showImages is called', () => {
-    const mockProduct = { productImages: [] }; // Mock product object
+    // const mockProduct = { productImages: [] }; 
+    const mockProduct = { productId: 2,
+      productName: 'No Image Product',
+      productDescription: 'Product with no image',
+      productDiscountedPrice: 80,
+      productActualPrice: 100,
+      productImages: [] }; // Mock product object
     component.showImages(mockProduct);
     expect(matDialogMock.open).toHaveBeenCalled();
   });

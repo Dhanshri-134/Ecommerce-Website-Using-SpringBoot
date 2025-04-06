@@ -39,8 +39,8 @@ public class ProductController {
 
         for (MultipartFile file : multipartFiles) {
             ImageModel imageModel = new ImageModel(
-                    file.getOriginalFilename(),
                     file.getContentType(),
+                    file.getOriginalFilename(),
                     file.getBytes()
             );
             imageModels.add(imageModel);
@@ -65,7 +65,7 @@ public class ProductController {
         productService.deleteProductDetails(productId);
     }
 
-    @PreAuthorize("hasRole('Admin')")
+//    @PreAuthorize("hasRole('Admin')")
     @GetMapping({"/getProductDetails/{isSingleProductCheckout}/{productId}"})
     public List<Product> getProductDetails(@PathVariable(name = "isSingleProductCheckout") boolean isSingleProductCheckout, @PathVariable(name = "productId") Integer productId){
         return productService.getProductDetails(isSingleProductCheckout, productId);

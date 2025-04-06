@@ -2,17 +2,7 @@ package com.project.eccom.entity;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Column;
-
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 @Entity
 public class Product {
@@ -35,6 +25,9 @@ public class Product {
                         @JoinColumn(name = "image_id")
                 }
         )
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "product_id")
+//    private Set<ImageModel> productImages;
     private Set<ImageModel> productImages;
 
     public Set<ImageModel> getProductImages() {

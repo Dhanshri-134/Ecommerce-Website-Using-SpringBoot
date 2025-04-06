@@ -10,7 +10,8 @@ export class UserAuthService {
   }
 
   public getRoles(): string[] {
-    return JSON.parse(localStorage.getItem('roles') || '[]');
+    const roleObjects = JSON.parse(localStorage.getItem('roles') || '[]');
+    return roleObjects.map((role: any) => role.roleName);
   }
 
   public setToken(jwtToken: string): void {
@@ -30,12 +31,12 @@ export class UserAuthService {
   }
 
   public isAdmin(): boolean {
-    const roles: any[] = this.getRoles();
+    const roles = this.getRoles();
     return roles.includes('Admin');
   }
 
   public isUser(): boolean {
-    const roles: any[] = this.getRoles();
+    const roles = this.getRoles();
     return roles.includes('User');
 
   }

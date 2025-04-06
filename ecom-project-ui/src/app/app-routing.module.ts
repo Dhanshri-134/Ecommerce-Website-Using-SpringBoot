@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'showProductDetails', component: ShowProductDetailsComponent, canActivate: [AuthGuard], data: { roles: ['Admin'] } },
   { path: 'productViewDetails', component: ProductViewDetailsComponent, resolve: { product: ProductResolveService } },
   {
-    path: 'buyProduct', component: BuyProductComponent, canActivate: [AuthGuard], data: { roles: ['User'] },
+    path: 'buyProduct', component: BuyProductComponent, canActivate: [AuthGuard], data: { roles: ['User','Admin'] },
     resolve: {
       productDetails: BuyProductResolverService
     }

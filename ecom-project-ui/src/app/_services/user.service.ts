@@ -33,21 +33,20 @@ export class UserService {
     });
   }
 
-  public roleMatch(allowedRoles): boolean {
-    let isMatch = false;
-    const userRoles: any = this.userAuthService.getRoles();
-
-    if (userRoles != null && userRoles) {
+  public roleMatch(allowedRoles: string[]): boolean {
+    const userRoles = this.userAuthService.getRoles();
+  
+    if (userRoles && userRoles.length > 0) {
       for (let i = 0; i < userRoles.length; i++) {
         for (let j = 0; j < allowedRoles.length; j++) {
-          if (userRoles[i].roleName === allowedRoles[j]) {
-            isMatch = true;
-            return isMatch;
-          } else {
-            return isMatch;
+          if (userRoles[i] === allowedRoles[j]) {
+            return true;
           }
         }
       }
     }
+  
+    return false; 
   }
+  
 }

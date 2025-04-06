@@ -43,6 +43,5 @@ export class HomeComponent implements OnInit {
   }
   showProductDetails(productId){
     this.router.navigate(['/productViewDetails'], { queryParams: { productId: productId } });
-
   }
 }

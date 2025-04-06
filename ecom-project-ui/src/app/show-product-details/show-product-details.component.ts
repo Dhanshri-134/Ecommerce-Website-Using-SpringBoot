@@ -1,10 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Product } from "../_model/product.model"; // Ensure correct path
+import { Product } from "../_model/product.model"; 
 import { ProductService } from '../_services/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ShowProductImagesDialogComponent } from '../show-product-images-dialog/show-product-images-dialog.component';
-import { ImageProcessingService } from '../image-processing.service'; // Correct path
+import { ImageProcessingService } from '../image-processing.service'; 
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class ShowProductDetailsComponent implements OnInit {
   productDetails: Product[] = [];
-  dataSource: Product[] = [];  // This will be the data for your table
+  dataSource: Product[] = []; 
   displayedColumns: string[] = ['productId', 'productName', 'productDescription', 'productDiscountedPrice', 'productActualPrice','Images','Actions'];
 
   constructor(
@@ -26,13 +26,15 @@ export class ShowProductDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getAllProduct();  // Fetch the products when the component is initialized
+    this.getAllProduct();  
   }
 
-  // Fetch all products with their images processed
-  public getAllProduct(): void {
-    
-    this.productService.getAllProducts().subscribe(
+  public getAllProduct() {
+    this.productService.getAllProducts()
+    .pipe(
+      map((x : Product[],i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
+    )
+    .subscribe(
       (resp: Product[]) => {
         console.log('API Response:', resp);
         this.productDetails = resp;
@@ -45,11 +47,9 @@ export class ShowProductDetailsComponent implements OnInit {
     
   }
 
-  // Delete a product
   deleteProduct(productId: number): void {
     this.productService.deleteProduct(productId).subscribe(
-      () => {
-        // Refresh product list after deletion
+      (resp) => {
         this.getAllProduct();
       },
       (error: HttpErrorResponse) => {
@@ -58,7 +58,6 @@ export class ShowProductDetailsComponent implements OnInit {
     );
   }
 
-  // Open dialog to show product images
   showImages(product: Product): void {
     if (product.productImages && product.productImages.length > 0) {
       this.imagesDialog.open(ShowProductImagesDialogComponent, {
@@ -73,7 +72,6 @@ export class ShowProductDetailsComponent implements OnInit {
     }
   }
 
-  // Navigate to the edit product form
   editProductDetails(productId: number): void {
     this.router.navigate(['/addNewProduct', { productId: productId }]);
   }
