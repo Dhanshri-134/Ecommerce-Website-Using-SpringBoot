@@ -52,9 +52,12 @@ public class ProductController {
 
     // Updated to return a Page<Product> instead of a List<Product>
     @GetMapping({"/getAllProducts"})
-    public List<Product> getAllProducts(@RequestParam(defaultValue = "0") int pageNumber) {
-        return productService.getAllProducts(pageNumber);  // Return a Page<Product> object
-    }
+    public List<Product> getAllProducts(@RequestParam(defaultValue = "0") int pageNumber,
+    		                           @RequestParam(defaultValue="")String searchKey) {
+        List<Product>result= productService.getAllProducts(pageNumber,searchKey);  // Return a Page<Product> object
+        System.out.println("Result six=ze is:"+result.size());
+        return result;
+        }
 
     @GetMapping({"/getProductDetailsById/{productId}"})
     public Product getProductDetailsById(@PathVariable("productId") Integer productId){

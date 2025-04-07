@@ -24,11 +24,16 @@ export class HomeComponent implements OnInit {
             private router:Router) { }
 
   ngOnInit(): void {
-    this.getAllProduct();  // Fetch products on component init
+    this.getAllProducts();  // Fetch products on component init
   }
-
-  public getAllProduct(): void {
-    this.productService.getAllProducts(this.pageNumber)
+  searchByKeyword(searchkeyword){
+    console.log(searchkeyword);
+    this.pageNumber=0;
+    this.productDetails=[];
+    this.getAllProducts(searchkeyword);
+  }
+  public getAllProducts(searchKey:string=""): void {
+    this.productService.getAllProducts(this.pageNumber,searchKey)
       .pipe(
         map((products: Product[]) => products.map((product: Product) => 
           this.imageProcessingService.createImages(product)))  // Process images for each product
@@ -59,6 +64,6 @@ export class HomeComponent implements OnInit {
   public loadMoreProduct()
   {
     this.pageNumber=this.pageNumber + 1;
-    this.getAllProduct();
+    this.getAllProducts();
   }
 }

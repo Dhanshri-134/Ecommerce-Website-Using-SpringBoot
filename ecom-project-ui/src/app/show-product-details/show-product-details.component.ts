@@ -14,7 +14,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./show-product-details.component.css']
 })
 export class ShowProductDetailsComponent implements OnInit {
-  productDetails: Product[] = [];
+ showLoadMoreProductButton=false;
+ showTable=false;
+ pageNumber:number= 0;
+ productDetails: Product[] = [];
   dataSource: Product[] = [];  // This will be the data for your table
   displayedColumns: string[] = ['productId', 'productName', 'productDescription', 'productDiscountedPrice', 'productActualPrice','Images','Actions'];
 
@@ -26,23 +29,46 @@ export class ShowProductDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getAllProduct();  // Fetch the products when the component is initialized
+    this.getAllProducts();  // Fetch the products when the component is initialized
   }
 
   // Fetch all products with their images processed
-  public getAllProduct(): void {
-    
-    this.productService.getAllProducts(0).subscribe(
+  searchByKeyword(searchkeyword){
+    console.log(searchkeyword);
+    this.pageNumber=0;
+    this.productDetails=[];
+    this.getAllProducts(searchkeyword);
+  }
+  
+  public getAllProducts(searchKeyword: string ="") {
+    this.showTable=false;
+    this.productService. getAllProducts(this.pageNumber,searchKeyword)
+    .pipe(
+      map((x:Product[],i) => x.map((product:Product)=>this.imageProcessingService.createImages(product)))
+    ).subscribe(
       (resp: Product[]) => {
-        console.log('API Response:', resp);
-        this.productDetails = resp;
+        //console.log(resp);
+        resp.forEach(product=>this.productDetails.push(product));
+        console.log('msg',this.productDetails);
+        this.showTable=true;
+        if(resp.length==12){
+          this.showLoadMoreProductButton=true;
+        } else{
+          this.showLoadMoreProductButton = false;
+        }
+        //this.productDetails = resp;
         this.dataSource = this.productDetails;
       },
       (error: HttpErrorResponse) => {
-        console.error('Error fetching products:', error);
+        console.log(error);
       }
     );
     
+  }
+
+  loadMoreProduct(){
+    this.pageNumber=this.pageNumber + 1;
+    this.getAllProducts();
   }
 
   // Delete a product
@@ -50,7 +76,7 @@ export class ShowProductDetailsComponent implements OnInit {
     this.productService.deleteProduct(productId).subscribe(
       () => {
         // Refresh product list after deletion
-        this.getAllProduct();
+        this.getAllProducts();
       },
       (error: HttpErrorResponse) => {
         console.error('Error deleting product:', error);

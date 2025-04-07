@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import{Product} from '../_model/product.model';
+import { Product } from '../_model/product.model';
+
 @Component({
   selector: 'app-product-view-details',
   templateUrl: './product-view-details.component.html',
@@ -8,33 +9,27 @@ import{Product} from '../_model/product.model';
 })
 export class ProductViewDetailsComponent implements OnInit {
 
-  selectedProductIndex=0;
-  product:Product;
-  constructor(private activatedRoute:ActivatedRoute,
-<<<<<<< HEAD
-    private router: Router) { }
-=======
-    private router:Router  ) { }
->>>>>>> 0fc15ad2b77e54d12989640f3810ac410e689ec3
+  selectedProductIndex = 0;
+  product: Product;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.product = this.activatedRoute.snapshot.data['product'];
     console.log(this.product);
   }
-  changeIndex(index)
-  {
-    this.selectedProductIndex=index;
+
+  changeIndex(index: number): void {
+    this.selectedProductIndex = index;
   }
-<<<<<<< HEAD
-  buyProduct(ProductId){
- this.router.navigate(['/buyProduct',{
-  isSingleProductCheckout: true, id: ProductId
- }]);
-=======
-  buyProduct(productId){
+
+  buyProduct(productId: number): void {
     this.router.navigate(['/buyProduct', {
-      isSingleProductCheckout: true, id: productId
+      isSingleProductCheckout: true,
+      id: productId
     }]);
->>>>>>> 0fc15ad2b77e54d12989640f3810ac410e689ec3
   }
 }
