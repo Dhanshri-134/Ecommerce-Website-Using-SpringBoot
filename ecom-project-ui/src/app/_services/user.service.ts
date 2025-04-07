@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserAuthService } from './user-auth.service';
+import { NgForm } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,11 @@ export class UserService {
     private httpclient: HttpClient,
     private userAuthService: UserAuthService
   ) {}
+
+  public register(registerData)
+  {
+    return this.httpclient.post(this.PATH_OF_API+'/registerNewUser',registerData);
+  }
 
   public login(loginData) {
     return this.httpclient.post(this.PATH_OF_API + '/authenticate', loginData, {

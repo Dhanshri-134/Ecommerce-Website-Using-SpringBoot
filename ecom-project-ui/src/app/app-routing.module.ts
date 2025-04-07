@@ -14,6 +14,7 @@ import { BuyProductComponent } from './buy-product/buy-product.component';
 // import { resolve } from 'dns';
 import { BuyProductResolverService } from './buy-product-resolver.service';
 import { OrderConfirmationComponent } from './order-confirmation/order-confirmation.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -40,6 +41,10 @@ const routes: Routes = [
     component:OrderConfirmationComponent,
     canActivate:[AuthGuard],
     data:{roles:['User']}
+  },
+  {
+    path:"register",
+    component:RegisterComponent
   }
 
 ];

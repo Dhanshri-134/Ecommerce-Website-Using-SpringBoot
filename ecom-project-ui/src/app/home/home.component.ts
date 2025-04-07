@@ -13,35 +13,50 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  productDetails: Product[] = [];  // Typed as Product array
-  dataSource: Product[] = [];  // Typed as Product array
+  pageNumber:number=0;
+  showLoadButton=false;
+  productDetails: Product[] = []; 
+  dataSource: Product[] = [];  
 
   constructor(private productService: ProductService,
               private imageProcessingService: ImageProcessingService,
             private router:Router) { }
 
   ngOnInit(): void {
-    this.getAllProduct();  // Fetch products on component init
+    this.getAllProducts();  
   }
 
-  public getAllProduct(): void {
-    this.productService.getAllProducts()
+  public getAllProducts(): void {
+    this.productService.getAllProducts(this.pageNumber)
       .pipe(
         map((products: Product[]) => products.map((product: Product) => 
-          this.imageProcessingService.createImages(product)))  // Process images for each product
+          this.imageProcessingService.createImages(product)))  
       )  
       .subscribe(
         (resp: Product[]) => {
           console.log('Products:', resp);
-          this.productDetails = resp;  // Store fetched product details
-          this.dataSource = this.productDetails;  // Assign product details to dataSource for table
+          if(resp.length==12)
+            {
+              this.showLoadButton=true;
+            }
+            else{
+              this.showLoadButton=false;
+            }
+            resp.forEach(p=>this.productDetails.push(p));
+          // this.productDetails = resp;  
+          this.dataSource = this.productDetails;  
         },
         (error: HttpErrorResponse) => {
-          console.error('Error fetching products:', error);  // Handle any errors
+          console.error('Error fetching products:', error); 
         }
       );
   }
   showProductDetails(productId){
     this.router.navigate(['/productViewDetails'], { queryParams: { productId: productId } });
+  }
+  public loadMoreProduct()
+  {
+    this.pageNumber=this.pageNumber + 1;
+    this.getAllProducts();
   }
 }

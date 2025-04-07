@@ -14,20 +14,20 @@ export class ProductService {
   public addProduct(product:FormData){
     return this.httpClient.post<Product>("http://localhost:9090/addNewProduct/",product);
   }
-  public getAllProducts(){
-    return this.httpClient.get<Product[]>("http://localhost:9090/getAllProducts");
+  public getAllProducts(pageNumber: string | number){
+    return this.httpClient.get<Product[]>("http://localhost:9090/getAllProducts?pageNumber="+pageNumber);
   }
-  public getProductDetailsById(productId){
+  public getProductDetailsById(productId: string | number){
     return this.httpClient.get<Product>("http://localhost:9090/getProductDetailsById/"+productId);
   }
   public deleteProduct(productId: number){
     return this.httpClient.delete("http://localhost:9090/deleteProductDetails/"+productId);
   }
-  public getProductDetails(isSingleProductCheckout,productId){
+  public getProductDetails(isSingleProductCheckout: string,productId: string){
     return this.httpClient.get<Product[]>("http://localhost:9090/getProductDetails/"+isSingleProductCheckout+"/"+productId);
   } 
   public placeOrder(orderDetails: OrderDetails){
-    return this.httpClient.post("http://localhost:9090//placeOrder",orderDetails);
+    return this.httpClient.post("http://localhost:9090/placeOrder",orderDetails);
   }
 }
 
